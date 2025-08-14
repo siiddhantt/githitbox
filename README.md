@@ -20,12 +20,17 @@ Add to your GitHub profile README:
 
 Replace `your-username` with your GitHub username.
 
+**Note**: GitHub caches images. To see updated counts immediately, add a version parameter:
+```markdown
+![Profile Views](https://githitbox.duckdns.org/badge/your-username?v=2)
+```
+
 ### Live Examples:
 
-![Flat](https://githitbox.duckdns.org/badge/octocat?v=1)
-![Plastic](https://githitbox.duckdns.org/badge/octocat?style=plastic&v=1) 
-![Counter](https://githitbox.duckdns.org/badge/octocat?style=counter&v=1)
-![For-the-badge](https://githitbox.duckdns.org/badge/octocat?style=for-the-badge&v=1)
+![Flat](https://githitbox.duckdns.org/badge/octocat?v=2)
+![Plastic](https://githitbox.duckdns.org/badge/octocat?style=plastic&v=2) 
+![Counter](https://githitbox.duckdns.org/badge/octocat?style=counter&v=2)
+![For-the-badge](https://githitbox.duckdns.org/badge/octocat?style=for-the-badge&v=2)
 
 ## 🛠️ Local Development
 

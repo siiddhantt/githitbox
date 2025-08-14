@@ -238,7 +238,9 @@ async def get_profile_badge(
         io.BytesIO(img_bytes.read()),
         media_type="image/png",
         headers={
-            "Cache-Control": "public, max-age=60",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
             "Content-Type": "image/png",
             "Access-Control-Allow-Origin": "*",
         },
