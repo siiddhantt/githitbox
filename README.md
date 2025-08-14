@@ -20,15 +20,6 @@ Add to your GitHub profile README:
 
 Replace `your-username` with your GitHub username.
 
-### Badge Styles
-
-```markdown
-![Flat](https://githitbox.duckdns.org/badge/octocat)
-![Plastic](https://githitbox.duckdns.org/badge/octocat?style=plastic) 
-![Counter](https://githitbox.duckdns.org/badge/octocat?style=counter)
-![For-the-badge](https://githitbox.duckdns.org/badge/octocat?style=for-the-badge)
-```
-
 ### Live Examples:
 
 ![Flat](https://githitbox.duckdns.org/badge/octocat?v=1)
