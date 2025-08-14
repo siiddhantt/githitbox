@@ -1,4 +1,4 @@
-# Universal Profile Hit Counter
+# GitHitBox
 
 A production-ready, reusable GitHub profile hit counter service that generates beautiful badge images and tracks page views.
 
@@ -63,7 +63,7 @@ Returns global statistics:
 {
   "total_profiles": 100,
   "total_hits": 5000,
-  "service": "Universal Profile Hit Counter"
+  "service": "GitHitBox"
 }
 ```
 

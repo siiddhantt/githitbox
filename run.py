@@ -13,7 +13,7 @@ def install_requirements():
 
 
 def run_server():
-    print("Starting Universal Profile Hit Counter...")
+    print("Starting GitHitBox...")
     print("Server will be available at: http://localhost:8000")
     print("API Documentation: http://localhost:8000/docs")
     print("\nPress Ctrl+C to stop the server")

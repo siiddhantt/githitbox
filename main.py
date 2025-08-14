@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Universal Profile Hit Counter",
+    title="GitHitBox",
     description="A reusable GitHub profile hit counter service that generates badge images",
     version="1.0.0",
     lifespan=lifespan,
@@ -195,7 +195,7 @@ def create_counter_style_badge(
 @app.get("/")
 async def root():
     return {
-        "service": "Universal Profile Hit Counter",
+        "service": "GitHitBox",
         "version": "1.0.0",
         "usage": {
             "badge": "/badge/{username}",
@@ -264,7 +264,7 @@ async def get_global_stats(db: Session = Depends(get_db)):
     return {
         "total_profiles": total_profiles,
         "total_hits": total_hits,
-        "service": "Universal Profile Hit Counter",
+        "service": "GitHitBox",
     }
 
 

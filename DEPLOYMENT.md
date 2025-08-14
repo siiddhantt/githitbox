@@ -1,6 +1,6 @@
 # 🚀 Deployment Guide
 
-This guide covers deploying the Universal Profile Hit Counter to various free hosting platforms.
+This guide covers deploying GitHitBox to various free hosting platforms.
 
 ## Free Hosting Options (Recommended)
 
