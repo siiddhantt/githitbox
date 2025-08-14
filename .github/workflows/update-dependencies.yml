@@ -1,0 +1,51 @@
+name: Update Dependencies
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9 AM UTC
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install pip-tools
+      run: pip install pip-tools
+    
+    - name: Update dependencies
+      run: |
+        pip-compile --upgrade requirements.txt
+        
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'chore: update dependencies'
+        title: '🔄 Update Dependencies'
+        body: |
+          ## Automated Dependency Update
+          
+          This PR updates dependencies to their latest compatible versions.
+          
+          ### Changes
+          - Updated Python packages in `requirements.txt`
+          
+          ### Testing
+          Please verify that all tests pass and the application works correctly with updated dependencies.
+          
+          ---
+          *This PR was created automatically by GitHub Actions*
+        branch: update-dependencies
+        delete-branch: true
