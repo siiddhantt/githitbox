@@ -7,26 +7,26 @@ A fast, reusable GitHub profile hit counter that generates beautiful badge image
 - **Universal**: Works for any GitHub username
 - **4 Badge Styles**: flat, plastic, counter, for-the-badge
 - **Fast**: Built with FastAPI
-- **Persistent**: SQLite database
-- **Free to Host**: Railway, Render, Fly.io ready
+- **Persistent**: Database storage (SQLite/PostgreSQL)
+- **Easy to Deploy**: Works on any hosting platform
 
 ## 📖 Usage
 
 Add to your GitHub profile README:
 
 ```markdown
-![Profile Views](https://your-app.railway.app/badge/your-username)
+![Profile Views](https://your-deployed-url.com/badge/your-username)
 ```
 
-Replace `your-username` with your GitHub username and `your-app.railway.app` with your deployed URL.
+Replace `your-username` with your GitHub username and `your-deployed-url.com` with your deployed application URL.
 
 ### Badge Styles
 
 ```markdown
-![Flat](https://your-app.railway.app/badge/octocat)
-![Plastic](https://your-app.railway.app/badge/octocat?style=plastic) 
-![Counter](https://your-app.railway.app/badge/octocat?style=counter)
-![For-the-badge](https://your-app.railway.app/badge/octocat?style=for-the-badge)
+![Flat](https://your-deployed-url.com/badge/octocat)
+![Plastic](https://your-deployed-url.com/badge/octocat?style=plastic) 
+![Counter](https://your-deployed-url.com/badge/octocat?style=counter)
+![For-the-badge](https://your-deployed-url.com/badge/octocat?style=for-the-badge)
 ```
 
 ## 🛠️ Local Development
