@@ -1,14 +1,15 @@
 version: '3.8'
 
 services:
-  profile-counter:
+  githitbox:
     build: .
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=sqlite:///./data/profile_counter.db
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./data/profile_counter.db}
     volumes:
       - ./data:/app/data
+      - ./.env:/app/.env:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]

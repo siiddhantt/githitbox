@@ -3,12 +3,16 @@ import os
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 
+from dotenv import load_dotenv
+
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from PIL import Image, ImageDraw, ImageFont
 from sqlalchemy import Column, create_engine, DateTime, Integer, String
 from sqlalchemy.orm import declarative_base, Session, sessionmaker
 from sqlalchemy.sql import func
+
+load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./profile_counter.db")
 
