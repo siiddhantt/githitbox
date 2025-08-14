@@ -11,6 +11,10 @@ from sqlalchemy.orm import declarative_base, Session, sessionmaker
 from sqlalchemy.sql import func
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./profile_counter.db")
+
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 engine = create_engine(
     DATABASE_URL,
     connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {},
