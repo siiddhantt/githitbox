@@ -40,15 +40,6 @@ python main.py
 
 Visit `http://localhost:8000/docs` for API documentation.
 
-## 🐳 Docker Deployment
-
-### Quick Start
-```bash
-git clone https://github.com/yourusername/githitbox
-cd githitbox
-docker-compose up -d
-```
-
 ### Production Deployment
 ```bash
 # On your server
