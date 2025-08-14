@@ -27,10 +27,10 @@ Replace `your-username` with your GitHub username.
 
 ### Live Examples:
 
-![Flat](https://githitbox.duckdns.org/badge/octocat?v=2)
-![Plastic](https://githitbox.duckdns.org/badge/octocat?style=plastic&v=2) 
-![Counter](https://githitbox.duckdns.org/badge/octocat?style=counter&v=2)
-![For-the-badge](https://githitbox.duckdns.org/badge/octocat?style=for-the-badge&v=2)
+![Flat](https://githitbox.duckdns.org/badge/octocat1?v=2)
+![Plastic](https://githitbox.duckdns.org/badge/octocat2?style=plastic&v=2) 
+![Counter](https://githitbox.duckdns.org/badge/octocat3?style=counter&v=2)
+![For-the-badge](https://githitbox.duckdns.org/badge/octocat4?style=for-the-badge&v=2)
 
 ## 🛠️ Local Development
 
