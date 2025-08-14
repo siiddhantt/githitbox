@@ -29,19 +29,6 @@ Replace `your-username` with your GitHub username and `your-app.railway.app` wit
 ![For-the-badge](https://your-app.railway.app/badge/octocat?style=for-the-badge)
 ```
 
-## 🚀 Quick Deploy
-
-### Railway (Recommended - Free)
-1. Fork this repo
-2. Connect to [Railway](https://railway.app)
-3. Deploy automatically
-4. Use your Railway URL in README
-
-### Render (Free with sleep)
-1. Fork this repo  
-2. Connect to [Render](https://render.com)
-3. Deploy as Web Service
-
 ## 🛠️ Local Development
 
 ```bash
