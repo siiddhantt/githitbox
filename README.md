@@ -8,8 +8,6 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](https://opensource.org/licenses/MIT)
 
-![Demo](https://via.placeholder.com/600x200/4c1/ffffff?text=GitHitBox+Badge+Examples)
-
 </div>
 
 ## 🚀 Features
