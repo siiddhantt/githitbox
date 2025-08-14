@@ -15,19 +15,26 @@ A fast, reusable GitHub profile hit counter that generates beautiful badge image
 Add to your GitHub profile README:
 
 ```markdown
-![Profile Views](https://your-deployed-url.com/badge/your-username)
+![Profile Views](https://githitbox.duckdns.org/badge/your-username)
 ```
 
-Replace `your-username` with your GitHub username and `your-deployed-url.com` with your deployed application URL.
+Replace `your-username` with your GitHub username.
 
 ### Badge Styles
 
 ```markdown
-![Flat](https://your-deployed-url.com/badge/octocat)
-![Plastic](https://your-deployed-url.com/badge/octocat?style=plastic) 
-![Counter](https://your-deployed-url.com/badge/octocat?style=counter)
-![For-the-badge](https://your-deployed-url.com/badge/octocat?style=for-the-badge)
+![Flat](https://githitbox.duckdns.org/badge/octocat)
+![Plastic](https://githitbox.duckdns.org/badge/octocat?style=plastic) 
+![Counter](https://githitbox.duckdns.org/badge/octocat?style=counter)
+![For-the-badge](https://githitbox.duckdns.org/badge/octocat?style=for-the-badge)
 ```
+
+### Live Examples:
+
+![Flat](https://githitbox.duckdns.org/badge/octocat?v=1)
+![Plastic](https://githitbox.duckdns.org/badge/octocat?style=plastic&v=1) 
+![Counter](https://githitbox.duckdns.org/badge/octocat?style=counter&v=1)
+![For-the-badge](https://githitbox.duckdns.org/badge/octocat?style=for-the-badge&v=1)
 
 ## 🛠️ Local Development
 
