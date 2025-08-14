@@ -4,7 +4,7 @@ services:
   githitbox:
     build: .
     ports:
-      - "8000:8000"
+      - "3001:3001"
     environment:
       - DATABASE_URL=${DATABASE_URL:-sqlite:///./data/profile_counter.db}
     volumes:
@@ -12,7 +12,7 @@ services:
       - ./.env:/app/.env:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:3001/health')"]
       interval: 30s
       timeout: 10s
       retries: 3

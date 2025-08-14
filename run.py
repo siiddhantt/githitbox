@@ -14,8 +14,8 @@ def install_requirements():
 
 def run_server():
     print("Starting GitHitBox...")
-    print("Server will be available at: http://localhost:8000")
-    print("API Documentation: http://localhost:8000/docs")
+    print("Server will be available at: http://localhost:3001")
+    print("API Documentation: http://localhost:3001/docs")
     print("\nPress Ctrl+C to stop the server")
 
     subprocess.run(
@@ -27,7 +27,7 @@ def run_server():
             "--host",
             "0.0.0.0",
             "--port",
-            "8000",
+            "3001",
             "--reload",
         ]
     )

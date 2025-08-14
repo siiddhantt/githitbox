@@ -38,31 +38,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-Visit `http://localhost:8000/docs` for API documentation.
-
-## 🐳 Docker Deployment
-
-### Quick Start
-```bash
-git clone https://github.com/yourusername/githitbox
-cd githitbox
-docker-compose up -d
-```
-
-### Production Deployment
-```bash
-# On your server
-git clone https://github.com/yourusername/githitbox
-cd githitbox
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your database URL
-
-# Deploy
-chmod +x deploy.sh
-./deploy.sh
-```
+Visit `http://localhost:3001/docs` for API documentation.
 
 ## � API Endpoints
 
