@@ -1,10 +1,17 @@
+"""
+GitHitBox - GitHub Profile Hit Counter Service
+
+A fast, reusable GitHub profile hit counter that generates beautiful badge images.
+Built with FastAPI, SQLAlchemy, and Pillow.
+"""
+
 import io
 import os
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from typing import Any, Dict
 
 from dotenv import load_dotenv
-
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from PIL import Image, ImageDraw, ImageFont
@@ -27,6 +34,8 @@ Base = declarative_base()
 
 
 class ProfileHit(Base):
+    """Database model for tracking profile hit counts."""
+
     __tablename__ = "profile_hits"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -41,6 +50,7 @@ Base.metadata.create_all(bind=engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    """Application lifespan manager."""
     yield
 
 
@@ -53,6 +63,7 @@ app = FastAPI(
 
 
 def get_db():
+    """Database dependency for FastAPI."""
     db = SessionLocal()
     try:
         yield db
@@ -60,102 +71,119 @@ def get_db():
         db.close()
 
 
-def create_counter_badge(username: str, count: int, style: str = "flat") -> io.BytesIO:
+BADGE_STYLES = {
+    "flat": {
+        "height": 20,
+        "padding": 6,
+        "font_size": 11,
+        "bg_color": "#555",
+        "count_bg_color": "#4c1",
+        "text_color": "#fff",
+    },
+    "plastic": {
+        "height": 18,
+        "padding": 5,
+        "font_size": 10,
+        "bg_color": "#555",
+        "count_bg_color": "#97CA00",
+        "text_color": "#fff",
+    },
+    "counter": {
+        "height": 32,
+        "padding": 4,
+        "font_size": 16,
+        "bg_color": "#2d3748",
+        "count_bg_color": "#2d3748",
+        "text_color": "#48bb78",
+        "digit_bg_color": "#1a202c",
+        "digit_border_color": "#4a5568",
+    },
+    "for-the-badge": {
+        "height": 28,
+        "padding": 8,
+        "font_size": 12,
+        "bg_color": "#555",
+        "count_bg_color": "#4c1",
+        "text_color": "#fff",
+    },
+}
 
-    if style == "flat":
-        height = 20
-        padding = 6
-        font_size = 11
-        bg_color = "#555"
-        count_bg_color = "#4c1"
-        text_color = "#fff"
-    elif style == "plastic":
-        height = 18
-        padding = 5
-        font_size = 10
-        bg_color = "#555"
-        count_bg_color = "#97CA00"
-        text_color = "#fff"
-    elif style == "counter":
-        height = 32
-        padding = 4
-        font_size = 16
-        bg_color = "#2d3748"
-        count_bg_color = "#2d3748"
-        text_color = "#48bb78"
-        digit_bg_color = "#1a202c"
-        digit_border_color = "#4a5568"
-    else:
-        height = 28
-        padding = 8
-        font_size = 12
-        bg_color = "#555"
-        count_bg_color = "#4c1"
-        text_color = "#fff"
+
+def validate_username(username: str) -> None:
+    """Validate GitHub username format."""
+    if not username or len(username) > 39:
+        raise HTTPException(status_code=400, detail="Invalid username")
+    if not all(c.isalnum() or c == "-" for c in username):
+        raise HTTPException(status_code=400, detail="Invalid username format")
+
+
+def get_font(font_size: int):
+    """Get font for badge text rendering."""
+    try:
+        return ImageFont.truetype("arial.ttf", font_size)
+    except (OSError, IOError):
+        return ImageFont.load_default()
+
+
+def create_counter_badge(username: str, count: int, style: str = "flat") -> io.BytesIO:
+    """Create a badge image for the given username and count."""
+    style_config = BADGE_STYLES.get(style, BADGE_STYLES["for-the-badge"])
+
+    if style == "counter":
+        return create_counter_style_badge(count, style_config)
+    return create_standard_badge(count, style_config)
+
+
+def create_standard_badge(count: int, config: Dict[str, Any]) -> io.BytesIO:
+    """Create a standard style badge (flat, plastic, for-the-badge)."""
     label_text = "Profile Views"
     count_text = str(count)
 
-    try:
-        font = ImageFont.truetype("arial.ttf", font_size)
-    except:
-        font = ImageFont.load_default()
-    if style == "counter":
-        return create_counter_style_badge(
-            count,
-            font,
-            height,
-            padding,
-            font_size,
-            bg_color,
-            text_color,
-            digit_bg_color,
-            digit_border_color,
-        )
+    font = get_font(config["font_size"])
+
     label_bbox = font.getbbox(label_text)
     count_bbox = font.getbbox(count_text)
 
     label_width = label_bbox[2] - label_bbox[0]
     count_width = count_bbox[2] - count_bbox[0]
+    total_width = label_width + count_width + (config["padding"] * 4)
 
-    total_width = label_width + count_width + (padding * 4)
-
-    img = Image.new("RGB", (total_width, height), color="white")
+    img = Image.new("RGB", (total_width, config["height"]), color="white")
     draw = ImageDraw.Draw(img)
 
-    draw.rectangle([0, 0, label_width + padding * 2, height], fill=bg_color)
+    draw.rectangle(
+        [0, 0, label_width + config["padding"] * 2, config["height"]],
+        fill=config["bg_color"],
+    )
     draw.text(
-        (padding, (height - font_size) // 2), label_text, fill=text_color, font=font
+        (config["padding"], (config["height"] - config["font_size"]) // 2),
+        label_text,
+        fill=config["text_color"],
+        font=font,
     )
 
     draw.rectangle(
-        [label_width + padding * 2, 0, total_width, height], fill=count_bg_color
+        [label_width + config["padding"] * 2, 0, total_width, config["height"]],
+        fill=config["count_bg_color"],
     )
     draw.text(
-        (label_width + padding * 3, (height - font_size) // 2),
+        (
+            label_width + config["padding"] * 3,
+            (config["height"] - config["font_size"]) // 2,
+        ),
         count_text,
-        fill=text_color,
+        fill=config["text_color"],
         font=font,
     )
 
     img_bytes = io.BytesIO()
     img.save(img_bytes, format="PNG")
     img_bytes.seek(0)
-
     return img_bytes
 
 
-def create_counter_style_badge(
-    count: int,
-    font,
-    height: int,
-    padding: int,
-    font_size: int,
-    bg_color: str,
-    text_color: str,
-    digit_bg_color: str,
-    digit_border_color: str,
-) -> io.BytesIO:
-
+def create_counter_style_badge(count: int, config: Dict[str, Any]) -> io.BytesIO:
+    """Create a digital counter style badge."""
     count_text = f"{count:07d}"
     digits = list(count_text)
 
@@ -167,11 +195,12 @@ def create_counter_style_badge(
     digits_width = (digit_width * total_digits) + (digit_spacing * (total_digits - 1))
     total_width = digits_width
 
-    img = Image.new("RGBA", (total_width, height), color=(0, 0, 0, 0))
+    img = Image.new("RGBA", (total_width, config["height"]), color=(0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
+    font = get_font(config["font_size"])
     start_x = 0
-    start_y = (height - digit_height) // 2
+    start_y = (config["height"] - digit_height) // 2
 
     for i, digit in enumerate(digits):
         x = start_x + (i * (digit_width + digit_spacing))
@@ -195,12 +224,12 @@ def create_counter_style_badge(
     img_bytes = io.BytesIO()
     img.save(img_bytes, format="PNG")
     img_bytes.seek(0)
-
     return img_bytes
 
 
 @app.get("/")
-async def root():
+async def root() -> Dict[str, Any]:
+    """API root endpoint with service information."""
     return {
         "service": "GitHitBox",
         "version": "1.0.0",
@@ -216,12 +245,10 @@ async def root():
 @app.get("/badge/{username}")
 async def get_profile_badge(
     username: str, style: str = "flat", db: Session = Depends(get_db)
-):
+) -> StreamingResponse:
+    """Generate and return a profile badge image."""
+    validate_username(username)
 
-    if not username or len(username) > 39:
-        raise HTTPException(status_code=400, detail="Invalid username")
-    if not all(c.isalnum() or c == "-" for c in username):
-        raise HTTPException(status_code=400, detail="Invalid username format")
     profile_hit = db.query(ProfileHit).filter(ProfileHit.username == username).first()
 
     if profile_hit:
@@ -248,10 +275,12 @@ async def get_profile_badge(
 
 
 @app.get("/count/{username}")
-async def get_profile_count(username: str, db: Session = Depends(get_db)):
+async def get_profile_count(
+    username: str, db: Session = Depends(get_db)
+) -> Dict[str, Any]:
+    """Get profile hit count as JSON."""
+    validate_username(username)
 
-    if not username or len(username) > 39:
-        raise HTTPException(status_code=400, detail="Invalid username")
     profile_hit = db.query(ProfileHit).filter(ProfileHit.username == username).first()
 
     if not profile_hit:
@@ -265,8 +294,8 @@ async def get_profile_count(username: str, db: Session = Depends(get_db)):
 
 
 @app.get("/stats")
-async def get_global_stats(db: Session = Depends(get_db)):
-
+async def get_global_stats(db: Session = Depends(get_db)) -> Dict[str, Any]:
+    """Get global service statistics."""
     total_profiles = db.query(ProfileHit).count()
     total_hits = db.query(func.sum(ProfileHit.hit_count)).scalar() or 0
 
@@ -278,7 +307,8 @@ async def get_global_stats(db: Session = Depends(get_db)):
 
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> Dict[str, str]:
+    """Health check endpoint."""
     return {"status": "healthy", "timestamp": datetime.now(timezone.utc).isoformat()}
 
 
