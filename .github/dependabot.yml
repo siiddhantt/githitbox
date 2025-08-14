@@ -18,7 +18,7 @@ updates:
       - "python"
     reviewers:
       - "@me"
-    
+
   # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
