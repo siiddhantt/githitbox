@@ -4,5 +4,5 @@ sqlalchemy==2.0.45
 pillow==12.0.0
 python-multipart==0.0.20
 pydantic==2.12.3
-psycopg2-binary==2.9.11
+psycopg2-binary==2.9.12
 python-dotenv==1.2.1
